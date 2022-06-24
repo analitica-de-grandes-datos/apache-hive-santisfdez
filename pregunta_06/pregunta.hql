@@ -46,10 +46,10 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
-DROP TABLE IF EXIST table1;
+DROP TABLE IF EXISTS table1;
 CREATE TABLE tabla1 (linea INT, letra STRING);
 INSERT OVERWRITE TABLE tabla1 SELECT tbl01.c1, UPPER(m.c7) FROM tbl0 LATERAL VIEW explode(c5) m AS c7;
-DROP TABLE IF EXIST solucion;
+DROP TABLE IF EXISTS solucion;
 CREATE TABLE solucion (letra1 STRING);
 INSERT OVERWRITE TABLE solucion SELECT concat_ws(':',collect_set(letra)) FROM letras GROUP BY linea;
 
