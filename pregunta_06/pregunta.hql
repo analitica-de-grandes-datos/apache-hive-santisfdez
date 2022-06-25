@@ -54,4 +54,3 @@ CREATE TABLE solucion (letra1 STRING);
 INSERT OVERWRITE TABLE solucion SELECT concat_ws(':',collect_set(letra)) FROM tabla1 GROUP BY linea;
 
 INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' SELECT * FROM solucion;
-
