@@ -46,3 +46,11 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+DROP TABLE IF EXISTS tabla1;
+CREATE TABLE tabla1 (linea INT, letra STRING);
+INSERT OVERWRITE TABLE tabla1 SELECT tbl0.c1, UPPER(m.c7) FROM tbl0 LATERAL VIEW explode(c5) m AS c7;
+DROP TABLE IF EXISTS solucion;
+CREATE TABLE solucion (letra1 STRING);
+INSERT OVERWRITE TABLE solucion SELECT concat_ws(':',collect_set(letra)) FROM tabla1 GROUP BY linea;
+
+INSERT OVERWRITE LOCAL DIRECTORY './output' ROW FORMAT DELIMITED FIELDS TERMINATED BY ',' SELECT * FROM solucion;
